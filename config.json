@@ -1,0 +1,11 @@
+{
+	"colors": {
+		"bg": "rgba(20, 20, 20, .93)",
+		"fg": "rgba(155, 102, 255, 1)",
+		"mid": "rgba(255, 255, 255, .2)"
+	},
+	"display": {
+		"cpu": true,
+		"ram": true
+	}
+}

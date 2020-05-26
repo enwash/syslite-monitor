@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
-const path = require('path')
+const {app, BrowserWindow} = require('electron');
+const path = require('path');
+const fs = require('fs');
 
 /*app.setUserTasks([
   {
@@ -26,13 +27,27 @@ function createWindow () {
     transparent: true,
     resizable: false,
     maximizable: false,
-    icon: 'images/icon.png'
+    icon: 'app/images/icon.png'
    });
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('app/index.html')
   mainWindow.removeMenu();
-  mainWindow.setIcon(path.join(__dirname, '/images/icon.png'));
+  mainWindow.setIcon(path.join(__dirname, 'app/images/icon.png'));
+
+  let rawdata = fs.readFileSync('config.json');
+  let data = JSON.parse(rawdata);
+
+  let numWidgets = 0;
+
+  for (i in data.display) {
+    if (data.display[i]) {
+      numWidgets++;
+    }
+  }
+
+  mainWindow.setSize(150+((numWidgets-1) * 125),150);
+
   //mainWindow.openDevTools();
 
   /*mainWindow.on('close', function(e) {
