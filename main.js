@@ -15,8 +15,8 @@ const fs = require('fs');
 ])*/
 
 function createWindow () {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
+
+  let conf = {
     width: 290,
     height: 150,
     webPreferences: {
@@ -27,13 +27,9 @@ function createWindow () {
     transparent: true,
     resizable: false,
     maximizable: false,
-    icon: 'app/images/icon.png'
-   });
-
-  // and load the index.html of the app.
-  mainWindow.loadFile('app/index.html')
-  mainWindow.removeMenu();
-  mainWindow.setIcon(path.join(__dirname, 'app/images/icon.png'));
+    icon: 'src/images/icon.png',
+    center: true
+  };
 
   let rawdata = fs.readFileSync('config.json');
   let data = JSON.parse(rawdata);
@@ -46,6 +42,15 @@ function createWindow () {
     }
   }
 
+  conf = Object.assign(conf,data.window);
+
+  // Create the browser window.
+  const mainWindow = new BrowserWindow(conf);
+
+  // and load the index.html of the app.
+  mainWindow.loadFile('src/index.html')
+  mainWindow.removeMenu();
+  mainWindow.setIcon(path.join(__dirname, 'src/images/icon.png'));
   mainWindow.setSize(150+((numWidgets-1) * 125),150);
 
   //mainWindow.openDevTools();
